@@ -17,7 +17,7 @@ class BunnyTable(Frame):
     # TODO: Figure out how to associate this button with the bunny's #. Index won't work because of litter rows being added randomly. Maybe on button click, pass bunNum into a function?
     # Adds a row with information about an individual bunny
     def addNormalRow(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=bunNum + "\t\t" + bunParents + "\t\t" + sex + "\t\t" + albino + "\t\t" + color + "\t\t" + pattern + "\t\t" + tremor, command=lambda: self.controller.changeSelectedBunny(bunNum)))
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=bunNum + "\t\t" + bunParents + "\t\t" + sex + "\t\t" + albino + "\t\t" + color + "\t\t" + pattern + "\t\t" + tremor, command=lambda: self.controller.changeSelectedBunny(bunNum, bunParents, sex, albino, color, pattern, tremor)))
         self.resetRows()
 
     # Adds a row that displays info about the litter when clicked

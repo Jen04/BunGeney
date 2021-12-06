@@ -8,8 +8,6 @@ class MainWindow(Frame):
         
         # Master is root   
         self.master = master
-        self.setup()
-
-    def setup(self):
+        self.master.resizable(False, False)
         self.master.title("Inheritance Lab")
 
