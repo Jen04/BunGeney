@@ -1,3 +1,7 @@
+#listeroni = [[[[["msex", "malb", "mcol", "mden", "mpat", "mtrem"], ["dsex", "dalb", "dcol", "dden", "dpat", "dtrem"]], ["sex", "alb", "col+d", "pat", "trem"]], [[["msex", "malb", "mcol", "mden", "mpat", "mtrem"], ["dsex", "dalb", "dcol", "dden", "dpat", "dtrem"]], ["sex", "alb", "col+d", "pat", "trem"]]]], [[[["msex", "malb", "mcol", "mden", "mpat", "mtrem"], ["dsex", "dalb", "dcol", "dden", "dpat", "dtrem"]], ["sex", "alb", "col+d", "pat", "trem"]]]
+#print(listeroni)
+#print(len(listeroni[1]))
+
 
 from Genotyper import genotype 
 from Mating import mate 
@@ -107,3 +111,15 @@ def total(mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, ds
     #print("Potential Mothers = ", mom_list)
     #print("Potential Fathers = ", dad_list)
     return main_list
+
+
+
+
+mom = ["Female", True, "N/A", "N/A", True]
+dad = ["Male", False, "Lilac", "Broken", False] 
+numb_os = 5
+
+bunny_test = total("new", "new", numb_os, mom[0], mom[1], mom[2], mom[3], mom[4], dad[0], dad[1], dad[2], dad[3], dad[4])
+for l in bunny_test:
+    l
+    #print(l)

@@ -20,9 +20,12 @@ def phenotype(bun):
 
     if bun_albino == ["c", "c"]: 
         bun_albino = "Albino"
-        output = [bun_sex, bun_albino, bun_trem]
+        bun_col = "Unknown"
+        bun_spot = "Unknown"
+        
 
     if bun_albino == ["C", "C"] or bun_albino == ["C", "c"] or bun_albino == ["c", "C"]: 
+        bun_albino = "Not Albino"
         if bun_den == ["D", "D"] or bun_den == ["D", "d"] or bun_den == ["d", "D"]: 
             if bun_col == ["B", "B"] or bun_col == ["B", "b"] or bun_col == ["b", "B"]: bun_col = "Black"
             if bun_col == ["b", "b"]: bun_col = "Chocolate"
@@ -32,7 +35,9 @@ def phenotype(bun):
         if bun_spot == ["E", "E"]: bun_spot = "Broken"
         if bun_spot == ["e", "e"]: bun_spot = "Solid"
         if bun_spot == ["E", "e"] or bun_spot == ["e", "E"]: bun_spot = "Charlie"
-        output = [bun_sex, bun_spot, bun_col, bun_trem]
+        
+
+    output = [bun_sex, bun_albino, bun_col, bun_spot, bun_trem]
 
     return output
 
