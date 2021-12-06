@@ -1,16 +1,16 @@
 def phenotype(bun):
     bun_sex = [bun[0][0], bun[1][0]]
-    print("bun_sex = ", bun_sex)
+    #print("bun_sex = ", bun_sex)
     bun_albino = [bun[0][1], bun[1][1]]
-    print("bun_albino = ", bun_albino)
+    #print("bun_albino = ", bun_albino)
     bun_col = [bun[0][2], bun[1][2]]
-    print("bun_col = ", bun_col)
+    #print("bun_col = ", bun_col)
     bun_den = [bun[0][3], bun[1][3]]
-    print("bun_den = ", bun_den)
+    #print("bun_den = ", bun_den)
     bun_spot = [bun[0][4], bun[1][4]]
-    print("bun_spot = ", bun_spot)
+    #print("bun_spot = ", bun_spot)
     bun_trem = [bun[0][5], bun[1][5]]
-    print("bun_trem = ", bun_trem)
+    #print("bun_trem = ", bun_trem)
 
     if bun_sex == ["X", "X"]: bun_sex = "Female"
     if bun_sex == ["X", "Y"]: bun_sex = "Male"

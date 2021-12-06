@@ -4,12 +4,6 @@ from Mating import mate
 from Phenotyper import phenotype 
 
 main_list = [[]]
-sex = []
-albino = []
-color = []
-spotting = []
-tremor = []
-litter0_buns = 0
 litter_numb = 0
 
 def new_parent(sex, albino, color, spotting, tremor):
