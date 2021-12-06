@@ -91,10 +91,10 @@ def new_litter(mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremo
         bun_phen = phenotype(litter_x[i])
         new_bun = [bun_gen, bun_phen, parents]
         main_list[litter_numb].append(new_bun)
-    return main_list
+    return main_list  
 
 def total(mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor):
-    main_list = new_litter(mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor)
+    main_list = new_litter(mother, father, int(numb_os), msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor)
     mom_list = pot_mothers()
     dad_list = pot_fathers()
 
