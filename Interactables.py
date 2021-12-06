@@ -8,7 +8,7 @@ def buttons(controller, root):
 
     # New Litter
     # TODO: create conditional to choose what menus pop up when this button is clicked. If there is no existing litter, it needs to prompt user for mother and father creation
-    controller.newLButton = Button(root, text="New Litter", command=lambda: controller.newParents())
+    controller.newLButton = Button(root, text="New Litter", command=lambda: newLitterMenu(controller, root))
     controller.newLButton['font'] = fontSettings
     controller.newLButton.grid(row = 0, column = 0, pady = 10, padx = 10, sticky=W, columnspan=2)
 
@@ -30,6 +30,7 @@ def bunnyInfo(controller, root):
     controller.bunnyInfo["InfoLabel"] = Label(root, text="Sex:\nAlbino:\nColor:\nPattern:\nTremor:", font=(14)).grid(row=2, column = 7, padx = 20, pady = 20)
 
 # TODO: before this pops up, calculate all males and females or something to pull into dropdown?
+# TODO: REMOVE X otherwise things break 
 def newLitterMenu(controller, root):
     controller.newLButton.configure(state=DISABLED)
     fontSettings = font.Font(size = 12)
@@ -37,30 +38,30 @@ def newLitterMenu(controller, root):
     litterMenu = Toplevel(root)
     litterMenu.title("New Litter Menu")
     litterMenu.resizable(False, False)
-    litterMenu.attributes('-topmost', 1)
 
     Label(litterMenu, text="Mother").grid(row=0, column=0, padx=10, pady=10, sticky=W)
     motherBox = Combobox(litterMenu, values=controller.motherTable, state='readonly')
     motherBox.grid(row=1, column=0, padx=30, pady=10, sticky=W)
-    motherBox.current(1)
+    motherBox.current(0)
 
     Label(litterMenu, text="Father").grid(row=2, column=0, padx=10, pady=10, sticky=W)
     fatherBox = Combobox(litterMenu, values=controller.fatherTable, state='readonly')
     fatherBox.grid(row=3, column=0, padx=30, pady=10, sticky=W)
-    fatherBox.current(1)
+    fatherBox.current(0)
 
     Label(litterMenu, text="Number of Offspring").grid(row=4, column=0, padx=10, pady=10, sticky=W)
     offspringNumBox = Entry(litterMenu)
     offspringNumBox.grid(row=5, column=0, padx=30, pady=10, sticky=W, columnspan=1)
 
-    okButton = Button(litterMenu, text="Okay", command=lambda: checkInput(controller, litterMenu, motherBox.get(), fatherBox.get(), offspringNumBox.get()))
+    okButton = Button(litterMenu, text="Okay", command=lambda: checkInput(controller, root, litterMenu, motherBox.get(), fatherBox.get(), offspringNumBox.get()))
     okButton['font'] = fontSettings
     okButton.grid(row=6, column=0, padx=30, pady=10, sticky=W)
 
-def checkInput(controller, litterMenu, motherNum, fatherNum, offSpringNum):
+def checkInput(controller, root, litterMenu, motherNum, fatherNum, offspringNum):
+
     # Is it an int?
     try: 
-        strToNum = int(offSpringNum)
+        strToNum = int(offspringNum)
     except ValueError:
         messagebox.showerror(title="Invalid Input", message="Please enter a number for number of offspring.")
         return
@@ -74,68 +75,131 @@ def checkInput(controller, litterMenu, motherNum, fatherNum, offSpringNum):
     if strToNum > 100:
         messagebox.showerror(title="Invalid Input", message="Please choose a number less than or equal to 100 for number of offspring.")
         return
-    
-    # Passed all checks, pass the info along
-    controller.generateNewLitter(litterMenu, motherNum, fatherNum, offSpringNum)
 
-# TODO: Infinite number of newlitters can pop up, probably same with the other one. Fix this somehow
-def newBunnyMenu(controller, root, parentType):
-    # TODO: DISABLE X ON WINDOW
+    controller.currentMother = motherNum
+    controller.currentFather = fatherNum
+    controller.offspringNum = offspringNum
+
+    if motherNum == "New" and fatherNum == "New":
+        litterMenu.destroy()
+        newParentsMenu(controller, root)
+    elif motherNum == "New":
+        litterMenu.destroy()
+        newBunnyMenu(controller, controller.root, "Mother")
+    elif fatherNum == "New":
+        litterMenu.destroy()
+        newBunnyMenu(controller, controller.root, "Father")
+    else:
+        controller.setExistingBunnies(litterMenu)
+
+def newParentsMenu(controller, root):
+    # Father
     controller.newLButton.configure(state=DISABLED)
 
     fontSettings = font.Font(size = 12)
 
-    bunnyMenu = Toplevel(root)
-    bunnyMenu.resizable(False, False)
-    bunnyMenu.attributes('-topmost', 1)
+    parentsMenu = Toplevel(root)
+    parentsMenu.resizable(False, False)
+    parentsMenu.title("New Parents")
 
-    bunnyMenu.title("New " + parentType + " Menu")
-    Label(bunnyMenu, text="New " + parentType).grid(row=0, column=0, padx=10, pady=10, sticky=W)
+    # ------------------ ( New Father ) ------------------ 
+    Label(parentsMenu, text="New Father").grid(row=0, column=0, padx=10, pady=10, sticky=W)
 
     # Albino
-    albinoVar = StringVar(value="No")
-    Label(bunnyMenu, text="Albino").grid(row=1, column=0, padx=10, pady=10, sticky=W)
-    aN = Radiobutton(bunnyMenu, text="No", variable=albinoVar, value="No", command=lambda: radiobuttonsOn(cB, cG, cC, cL, sB, sC, sS))
-    aN.grid(row=2, column=0, padx=5, pady=5, sticky=W)
-    aY = Radiobutton(bunnyMenu, text="Yes", variable=albinoVar, value="Yes", command=lambda: radiobuttonsOff(cB, cG, cC, cL, sB, sC, sS))
-    aY.grid(row=2, column=1, padx=5, pady=5, sticky=W)
+    Label(parentsMenu, text="Albino").grid(row=1, column=0, padx=10, pady=10, sticky=W)
+    fAlbinoBox = Combobox(parentsMenu, values=controller.dropDownList[0], state='readonly')
+    fAlbinoBox.grid(row=2, column=0, padx=30, pady=10, sticky=W)
+    fAlbinoBox.current(0)
 
     # Color
-    colorVar = StringVar(value="Black")
-    Label(bunnyMenu, text="Color").grid(row=3, column=0, padx=10, pady=10, sticky=W)
-    cB = Radiobutton(bunnyMenu, text="Black", variable=colorVar, value="Black")
-    cB.grid(row=4, column=0, padx=5, pady=5, sticky=W)
-
-    cG = Radiobutton(bunnyMenu, text="Grey", variable=colorVar, value="Grey")
-    cG.grid(row=4, column=1, padx=5, pady=5, sticky=W)
-
-    cC = Radiobutton(bunnyMenu, text="Chocolate", variable=colorVar, value="Chocolate")
-    cC.grid(row=4, column=2, padx=5, pady=5, sticky=W)
-
-    cL = Radiobutton(bunnyMenu, text="Lilac", variable=colorVar, value="Lilac")
-    cL.grid(row=4, column=3, padx=5, pady=5, sticky=W)
+    Label(parentsMenu, text="Color").grid(row=3, column=0, padx=10, pady=10, sticky=W)
+    fColorBox = Combobox(parentsMenu, values=controller.dropDownList[1], state='readonly')
+    fColorBox.grid(row=4, column=0, padx=30, pady=10, sticky=W)
+    fColorBox.current(0)
 
     # Spotting
-    spottingVar = StringVar(value="Broken")
-    Label(bunnyMenu, text="Spotting").grid(row=5, column=0, padx=10, pady=10, sticky=W)
-    sB = Radiobutton(bunnyMenu, text="Broken", variable=spottingVar, value="Broken")
-    sB.grid(row=6, column=0, padx=5, pady=5, sticky=W)
-
-    sC = Radiobutton(bunnyMenu, text="Charlie", variable=spottingVar, value="Charlie")
-    sC.grid(row=6, column=1, padx=5, pady=5, sticky=W)
-
-    sS = Radiobutton(bunnyMenu, text="Solid", variable=spottingVar, value="Solid")
-    sS.grid(row=6, column=2, padx=5, pady=5, sticky=W)
+    Label(parentsMenu, text="Spotting").grid(row=5, column=0, padx=10, pady=10, sticky=W)
+    fSpottingBox = Combobox(parentsMenu, values=controller.dropDownList[2], state='readonly')
+    fSpottingBox.grid(row=6, column=0, padx=30, pady=10, sticky=W)
+    fSpottingBox.current(0)
 
     # Tremor
-    tremorVar = StringVar(value="No")
-    Label(bunnyMenu, text="Tremor").grid(row=7, column=0, padx=10, pady=10, sticky=W)
-    tN = Radiobutton(bunnyMenu, text="No", variable=tremorVar, value="No")
-    tN.grid(row=8, column=0, padx=5, pady=5, sticky=W)
-    tY = Radiobutton(bunnyMenu, text="Yes", variable=tremorVar, value="Yes")
-    tY.grid(row=8, column=1, padx=5, pady=5, sticky=W)
+    Label(parentsMenu, text="Tremor").grid(row=7, column=0, padx=10, pady=10, sticky=W)
+    fTremorBox = Combobox(parentsMenu, values=controller.dropDownList[0], state='readonly')
+    fTremorBox.grid(row=8, column=0, padx=30, pady=10, sticky=W)
+    fTremorBox.current(0)
+
+    # ------------------ ( New Mother ) ------------------ 
+    Label(parentsMenu, text="New Mother").grid(row=0, column=3, padx=10, pady=10, sticky=W)
+
+    # Albino
+    Label(parentsMenu, text="Albino").grid(row=1, column=3, padx=10, pady=10, sticky=W)
+    mAlbinoBox = Combobox(parentsMenu, values=controller.dropDownList[0], state='readonly')
+    mAlbinoBox.grid(row=2, column=3, padx=30, pady=10, sticky=W)
+    mAlbinoBox.current(0)
+
+    # Color
+    Label(parentsMenu, text="Color").grid(row=3, column=3, padx=10, pady=10, sticky=W)
+    mColorBox = Combobox(parentsMenu, values=controller.dropDownList[1], state='readonly')
+    mColorBox.grid(row=4, column=3, padx=30, pady=10, sticky=W)
+    mColorBox.current(0)
+
+    # Spotting
+    Label(parentsMenu, text="Spotting").grid(row=5, column=3, padx=10, pady=10, sticky=W)
+    mSpottingBox = Combobox(parentsMenu, values=controller.dropDownList[2], state='readonly')
+    mSpottingBox.grid(row=6, column=3, padx=30, pady=10, sticky=W)
+    mSpottingBox.current(0)
+
+    # Tremor
+    Label(parentsMenu, text="Tremor").grid(row=7, column=3, padx=10, pady=10, sticky=W)
+    mTremorBox = Combobox(parentsMenu, values=controller.dropDownList[0], state='readonly')
+    mTremorBox.grid(row=8, column=3, padx=30, pady=10, sticky=W)
+    mTremorBox.current(0)
+
+    # msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
+    okButton = Button(parentsMenu, text="Okay", command=lambda: controller.setFirstGeneration(parentsMenu, mAlbinoBox.get(), mColorBox.get(), mSpottingBox.get(), mTremorBox.get(), fAlbinoBox.get(), fColorBox.get(), fSpottingBox.get(), fTremorBox.get()))
+    okButton.grid(row=9, column=0, padx=10, pady=10, sticky=W)
+
+def newRadioButton(controller, menu, name, txt, var, val, r, c):
+    controller.rbDict[name] = Radiobutton(menu, text=txt, variable=var, value=val)
+    controller.rbDict[name].grid(row=r, column=c, padx=5, pady=5, sticky=W)
+
+def newBunnyMenu(controller, root, parentType):
+    controller.newLButton.configure(state=DISABLED)
+
+    fontSettings = font.Font(size = 12)
+
+    nBunnyMenu = Toplevel(root)
+    nBunnyMenu.resizable(False, False)
+    nBunnyMenu.title("New " + parentType)
+
+    Label(nBunnyMenu, text="New " + parentType).grid(row=0, column=0, padx=10, pady=10, sticky=W)
+
+    # Albino
+    Label(nBunnyMenu, text="Albino").grid(row=1, column=0, padx=10, pady=10, sticky=W)
+    albinoBox = Combobox(nBunnyMenu, values=controller.dropDownList[0], state='readonly')
+    albinoBox.grid(row=2, column=0, padx=30, pady=10, sticky=W)
+    albinoBox.current(0)
+
+    # Color
+    Label(nBunnyMenu, text="Color").grid(row=3, column=0, padx=10, pady=10, sticky=W)
+    colorBox = Combobox(nBunnyMenu, values=controller.dropDownList[1], state='readonly')
+    colorBox.grid(row=4, column=0, padx=30, pady=10, sticky=W)
+    colorBox.current(0)
+
+    # Spotting
+    Label(nBunnyMenu, text="Spotting").grid(row=5, column=0, padx=10, pady=10, sticky=W)
+    spottingBox = Combobox(nBunnyMenu, values=controller.dropDownList[2], state='readonly')
+    spottingBox.grid(row=6, column=0, padx=30, pady=10, sticky=W)
+    spottingBox.current(0)
+
+    # Tremor
+    Label(nBunnyMenu, text="Tremor").grid(row=7, column=0, padx=10, pady=10, sticky=W)
+    tremorBox = Combobox(nBunnyMenu, values=controller.dropDownList[0], state='readonly')
+    tremorBox.grid(row=8, column=0, padx=30, pady=10, sticky=W)
+    tremorBox.current(0)
     
-    okButton = Button(bunnyMenu, text="Okay", command=lambda: controller.setNewInfo(bunnyMenu, albinoVar.get(), colorVar.get(), spottingVar.get(), tremorVar.get(), parentType))
+    okButton = Button(nBunnyMenu, text="Okay", command=lambda: controller.setNewParentInfo(nBunnyMenu, albinoBox.get(), colorBox.get(), spottingBox.get(), tremorBox.get(), parentType))
     okButton['font'] = fontSettings
     okButton.grid(row=9, column=0, padx=10, pady=10, sticky=W)
 

@@ -1,4 +1,5 @@
 import Interactables
+from Main import total
 from BunnyTable import BunnyTable
 from TotalsTable import TotalsTable
 from tkinter import *
@@ -14,9 +15,9 @@ class Controller:
         self.bunnyInfo = {}        
         # Row list used within Table.py. All row buttons are contained within this
         self.rowList = []
+        # Dropdown options when selecting info for a new bunny
+        self.dropDownList = [["No", "Yes"], ["Black", "Grey", "Chocolate", "Lilac"], ["Broken", "Charlie", "Solid"]]
 
-        self.currentMother = ""
-        self.currentFather = ""
         # This is used to change what the button does when clicked based on if a litter already exists
         self.newLButton = ""
 
@@ -28,8 +29,13 @@ class Controller:
         # Create totals table
         self.totalTable = TotalsTable(self.root, self)
         # TODO: Temporary list of values that needs to be replaced with mothers/fathers
-        self.motherTable = ["New", "1", "2", "3"]
-        self.fatherTable = ["New", "4", "5", "6"]
+        self.motherTable = ["New"]
+        self.fatherTable = ["New"]
+
+        # Used in bunny generation
+        self.offspringNum = 0
+        self.currentMother = ""
+        self.currentFather = ""
 
         # Set column lables for bunny table, set initial values for totals table
         self.tableSetup()
@@ -55,48 +61,41 @@ class Controller:
     def clearLitters(self):
         self.table.deleteAllRows()
         self.tableSetup()
-        self.newLButton.configure(command=lambda: self.newParents())
         self.currentMother = ""
         self.currentFather = ""
-        #self.motherTable = []
-        #self.fatherTable = []
+        self.offspringNum = 0
+        self.motherTable = ["New"]
+        self.fatherTable = ["New"]
 
     # Activates after litterMenu is filled out and "okay" button is clicked.
     #TODO: HOOK UP WITH JOE'S STUFF.
-    def generateNewLitter(self, menu, motherNum, fatherNum, offspringNum):
+
+    # mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
+    def setNewParentInfo(self, menu, albino, color, spotting, tremor, parentType):
+        # Check which parent is new, put zeroes for the other one or something
         menu.destroy()
         self.newLButton.configure(state=NORMAL)
 
-        if motherNum == "New":
-            # MotherNum gets passed in and becomes "parentType"
-            Interactables.newBunnyMenu(self, self.root, "Mother")
-        if fatherNum == "New":
-            Interactables.newBunnyMenu(self, self.root, "Father")
-
-        # Now new mother and father will be set by setNewInfo. Take this info and do something
-
-        print(motherNum, fatherNum, offspringNum)
-    
-    # Pops up new father and new mother menu for initial litter creation
-    # TODO:This can cause some bugs with the button being disabled.
-    def newParents(self):
-        Interactables.newBunnyMenu(self, self.root, "Mother")
-        Interactables.newBunnyMenu(self, self.root, "Father")
-
-    # TODO: HOOK UP WITH JOE'S STUFF.
-    def setNewInfo(self, menu, albino, color, spotting, tremor, parentType):
-        menu.destroy()
-        self.newLButton.configure(state=NORMAL)
-
-        self.newLButton.configure(command=lambda: Interactables.newLitterMenu(self, self.root))
-        # Not sure what exactly is done with this info, but it's here now
-        # Set this up at the end
+        # mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
         if parentType == "Mother":
-            pass
-            #self.currentMother = newMother
-        if parentType == "Father":
-            pass
-            #self.currentFather = newFather
+            total("new", self.currentFather, self.offspringNum, "Female", albino, color, spotting, tremor, 0, 0, 0, 0, 0)
+
+        elif parentType == "Father":
+            total(self.currentMother, "new", self.offspringNum, 0, 0, 0, 0, 0, "Male", albino, color, spotting, tremor)
+        else:
+            print("Something went wrong.")
+
+    def setExistingBunnies(self, litterMenu):
+        litterMenu.destroy()
+        total(self.currentMother, self.currentFather, self.offspringNum, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+    def setFirstGeneration(self, menu, malbino, mcolor, mspotting, mtremor, dalbino, dcolor, dspotting, dtremor):
+        menu.destroy()
+        self.newLButton.configure(state=NORMAL)
+
+        # mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
+        total("new", "new", self.offspringNum, "Female", malbino, mcolor, mspotting, mtremor, "Male", dalbino, dcolor, dspotting, dtremor)
+
 
     # Function used when a bunny row is clicked. Displays info about that bunny.
     def changeSelectedBunny(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
