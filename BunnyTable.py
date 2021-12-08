@@ -11,7 +11,7 @@ class BunnyTable(Frame):
 
     # Adds the first row that labels the grid
     def addFirstRow(self):
-        self.controller.rowList.insert(len(self.controller.rowList), Label(self.gridFrame, text="Bunny #\t\tParents\t\tSex\t\tAlbino\t\tColor\t\tPattern\t\tTremor"))
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text="Bunny #\t\tParents\t\tSex\t\tAlbino\t\tColor\t\tPattern\t\tTremor"))
         self.resetRows()
 
     # Adds a row with information about an individual bunny

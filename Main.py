@@ -17,6 +17,16 @@ main_list = [[]]
 litter_numb = 0
 bun_count = 0
 
+# Clears all values so program can be restarted
+def clearValues():
+    global main_list 
+    main_list = [[]]
+    global litter_numb
+    litter_numb = 0
+    global bun_count
+    bun_count = 0
+    print("Values: ", main_list, litter_numb, bun_count)
+
 def new_parent(sex, albino, color, spotting, tremor):
     global bun_count
     bun_gen = genotype(sex, albino, color, spotting, tremor)
@@ -55,7 +65,20 @@ def pot_fathers():
             bun_numb = bun_numb + 1
     return pot_dad_list
 
-def new_litter(mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor):
+def convertTremor(tremor):
+    if tremor == True:
+        return "Tremor"
+    else:
+        return "Healthy"
+        
+def convertAlbino(albino):
+    if albino == True:
+        return "Albino"
+    else:
+        return "Not Albino"    
+
+
+def new_litter(controller, mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor):
     global litter_numb
     global bun_count
     if TS:
@@ -70,7 +93,13 @@ def new_litter(mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremo
         print("len(main_list) = ", len(main_list))
     if mother == "new":
         mother = new_parent(msex, malbino, mcolor, mspotting, mtremor)
+        
+        # ----Bunny Added----
         main_list[litter_numb].append(mother)
+        
+        mBunnyNo = str(main_list[litter_numb][len(main_list[litter_numb])-1][3])
+        mParentsNo = main_list[litter_numb][len(main_list[litter_numb])-1][2]
+        controller.addBunnyToTable(mBunnyNo, mParentsNo, msex, convertAlbino(malbino), mcolor, mspotting, convertTremor(mtremor))
     else:
         mother = int(mother)
         bun_numb = 0
@@ -87,7 +116,13 @@ def new_litter(mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremo
     
     if father == "new":
         father = new_parent(dsex, dalbino, dcolor, dspotting, dtremor)
+        
+        # ----Bunny Added----
         main_list[litter_numb].append(father)
+
+        dBunnyNo = str(main_list[litter_numb][len(main_list[litter_numb])-1][3])
+        dParentsNo = main_list[litter_numb][len(main_list[litter_numb])-1][2]
+        controller.addBunnyToTable(dBunnyNo, dParentsNo, dsex, convertAlbino(dalbino), dcolor, dspotting, convertTremor(dtremor))
     else: 
         father = int(father)
         bun_numb = 0
@@ -121,13 +156,16 @@ def new_litter(mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremo
             print("\nlitter_numb at i = ", i, " is ", litter_numb)
             print("len(main_list) = ", len(main_list), "\n")
             print("main_list[litter_numb] = \n", main_list[litter_numb])
+        # ----Bunny Added----
         main_list[litter_numb].append(new_bun)
+        parentsStr = str(parents[0]) + " & " + str(parents[1])
+        controller.addBunnyToTable(str(bun_count), parentsStr, bun_phen[0], bun_phen[1], bun_phen[2], bun_phen[3], bun_phen[4])
     if TS:
         print("main_list after offspring = \n", main_list)
     return main_list  
 
-def total(mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor):
-    main_list = new_litter(mother, father, int(numb_os), msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor)
+def total(controller, mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor):
+    main_list = new_litter(controller, mother, father, int(numb_os), msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor)
     mom_list = pot_mothers()
     dad_list = pot_fathers()
     

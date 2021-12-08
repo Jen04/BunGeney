@@ -1,5 +1,5 @@
 import Interactables
-from Main import total
+import Main
 from BunnyTable import BunnyTable
 from TotalsTable import TotalsTable
 from tkinter import *
@@ -66,6 +66,11 @@ class Controller:
         self.offspringNum = 0
         self.motherTable = ["New"]
         self.fatherTable = ["New"]
+        Main.clearValues()
+
+    # Adds individual bunny to the table
+    def addBunnyToTable(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
+        self.table.addNormalRow(bunNum, bunParents, sex, albino, color, pattern, tremor)
 
     # Activates after litterMenu is filled out and "okay" button is clicked.
     #TODO: HOOK UP WITH JOE'S STUFF.
@@ -78,23 +83,35 @@ class Controller:
 
         # mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
         if parentType == "Mother":
-            total("new", self.currentFather, self.offspringNum, "Female", albino, color, spotting, tremor, 0, 0, 0, 0, 0)
+            Main.total(self, "new", self.currentFather, self.offspringNum, "Female", albino, color, spotting, tremor, 0, 0, 0, 0, 0)
 
         elif parentType == "Father":
-            total(self.currentMother, "new", self.offspringNum, 0, 0, 0, 0, 0, "Male", albino, color, spotting, tremor)
+            Main.total(self, self.currentMother, "new", self.offspringNum, 0, 0, 0, 0, 0, "Male", albino, color, spotting, tremor)
         else:
             print("Something went wrong.")
 
     def setExistingBunnies(self, litterMenu):
         litterMenu.destroy()
-        total(self.currentMother, self.currentFather, self.offspringNum, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        Main.total(self, self.currentMother, self.currentFather, self.offspringNum, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
+    # Starting here ****
     def setFirstGeneration(self, menu, malbino, mcolor, mspotting, mtremor, dalbino, dcolor, dspotting, dtremor):
         menu.destroy()
         self.newLButton.configure(state=NORMAL)
 
+        mAlbAnswer = self.yesNoConversion(malbino)
+        dAlbAnswer = self.yesNoConversion(dalbino)
+
+        if mAlbAnswer == True:
+            mcolor = "Unknown"
+            mspotting = "Unknown"
+
+        if dAlbAnswer == True:
+            dcolor = "Unknown"
+            dspotting = "Unknown"
+
         # mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
-        total("new", "new", self.offspringNum, "Female", self.yesNoConversion(malbino), mcolor, mspotting, self.yesNoConversion(mtremor), "Male", self.yesNoConversion(dalbino), dcolor, dspotting, self.yesNoConversion(dtremor))
+        Main.total(self, "new", "new", self.offspringNum, "Female", mAlbAnswer, mcolor, mspotting, self.yesNoConversion(mtremor), "Male", dAlbAnswer, dcolor, dspotting, self.yesNoConversion(dtremor))
 
     def yesNoConversion(self, yesNoStr):
         if yesNoStr == "Yes":
