@@ -11,12 +11,18 @@ class BunnyTable(Frame):
 
     # Adds the first row that labels the grid
     def addFirstRow(self):
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text="Bunny #\t\tParents\t\tSex\t\tAlbino\t\tColor\t\tPattern\t\tTremor"))
+        rowText = self.adjSp("Bunny #") + self.adjSp("Parents") + self.adjSp("Sex") + self.adjSp("Albino") + self.adjSp("Color") + self.adjSp("Pattern") + self.adjSp("Tremor")
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=rowText))
         self.resetRows()
+
+    # Adjust string formatting so it shows up in the table correctly. All strings within the table will span at least 15 characters
+    def adjSp(self, stri):
+        offset = 15 - len(stri)
+        return stri + ' ' * offset
 
     # Adds a row with information about an individual bunny
     def addNormalRow(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=bunNum + "\t\t" + bunParents + "\t\t" + sex + "\t\t" + albino + "\t\t" + color + "\t\t" + pattern + "\t\t" + tremor, command=lambda: self.controller.changeSelectedBunny(bunNum, bunParents, sex, albino, color, pattern, tremor)))
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=self.adjSp(bunNum) + self.adjSp(bunParents) + self.adjSp(sex) + self.adjSp(albino) + self.adjSp(color) + self.adjSp(pattern) + self.adjSp(tremor), command=lambda: self.controller.changeSelectedBunny(bunNum, bunParents, sex, albino, color, pattern, tremor)))
         self.resetRows()
 
     # Adds a row that displays info about the litter when clicked

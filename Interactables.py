@@ -2,13 +2,14 @@ from tkinter import *
 import tkinter.font as font
 from tkinter.ttk import Combobox
 from tkinter import messagebox
+import Main
 
 def buttons(controller, root):
     fontSettings = font.Font(size = 12)
 
     # New Litter
     # TODO: create conditional to choose what menus pop up when this button is clicked. If there is no existing litter, it needs to prompt user for mother and father creation
-    controller.newLButton = Button(root, text="New Litter", command=lambda: newLitterMenu(controller, root))
+    controller.newLButton = Button(root, text="New Litter", command=lambda: newLitterMenu(controller, root, Main.pot_mothers(), Main.pot_fathers()))
     controller.newLButton['font'] = fontSettings
     controller.newLButton.grid(row = 0, column = 0, pady = 10, padx = 10, sticky=W, columnspan=2)
 
@@ -31,7 +32,14 @@ def bunnyInfo(controller, root):
 
 # TODO: before this pops up, calculate all males and females or something to pull into dropdown?
 # TODO: REMOVE X otherwise things break 
-def newLitterMenu(controller, root):
+def newLitterMenu(controller, root, pot_mothers, pot_fathers):
+    mothers = ["New"] + pot_mothers
+    fathers = ["New"] + pot_fathers
+    if len(pot_mothers) == 0:
+        pot_mothers = "New"
+    if len(pot_fathers) == 0:
+        pot_fathers = "New"
+
     controller.newLButton.configure(state=DISABLED)
     fontSettings = font.Font(size = 12)
 
@@ -40,12 +48,12 @@ def newLitterMenu(controller, root):
     litterMenu.resizable(False, False)
 
     Label(litterMenu, text="Mother").grid(row=0, column=0, padx=10, pady=10, sticky=W)
-    motherBox = Combobox(litterMenu, values=controller.motherTable, state='readonly')
+    motherBox = Combobox(litterMenu, values=mothers, state='readonly')
     motherBox.grid(row=1, column=0, padx=30, pady=10, sticky=W)
     motherBox.current(0)
 
     Label(litterMenu, text="Father").grid(row=2, column=0, padx=10, pady=10, sticky=W)
-    fatherBox = Combobox(litterMenu, values=controller.fatherTable, state='readonly')
+    fatherBox = Combobox(litterMenu, values=fathers, state='readonly')
     fatherBox.grid(row=3, column=0, padx=30, pady=10, sticky=W)
     fatherBox.current(0)
 
