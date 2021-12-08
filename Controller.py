@@ -16,7 +16,7 @@ class Controller:
         # Row list used within Table.py. All row buttons are contained within this
         self.rowList = []
         # Dropdown options when selecting info for a new bunny
-        self.dropDownList = [["No", "Yes"], ["Black", "Grey", "Chocolate", "Lilac"], ["Broken", "Charlie", "Solid"]]
+        self.dropDownList = [["No", "Yes"], ["Black", "Gray", "Chocolate", "Lilac"], ["Broken", "Charlie", "Solid"]]
 
         # This is used to change what the button does when clicked based on if a litter already exists
         self.newLButton = ""
@@ -94,8 +94,15 @@ class Controller:
         self.newLButton.configure(state=NORMAL)
 
         # mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
-        total("new", "new", self.offspringNum, "Female", malbino, mcolor, mspotting, mtremor, "Male", dalbino, dcolor, dspotting, dtremor)
+        total("new", "new", self.offspringNum, "Female", self.yesNoConversion(malbino), mcolor, mspotting, self.yesNoConversion(mtremor), "Male", self.yesNoConversion(dalbino), dcolor, dspotting, self.yesNoConversion(dtremor))
 
+    def yesNoConversion(self, yesNoStr):
+        if yesNoStr == "Yes":
+            return True
+        elif yesNoStr == "No":
+            return False
+        else:
+            print("Yes/No was not passed in, something went wrong")
 
     # Function used when a bunny row is clicked. Displays info about that bunny.
     def changeSelectedBunny(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
