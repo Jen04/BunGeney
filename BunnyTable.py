@@ -22,7 +22,13 @@ class BunnyTable(Frame):
 
     # Adds a row with information about an individual bunny
     def addNormalRow(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=self.adjSp(bunNum) + self.adjSp(bunParents) + self.adjSp(sex) + self.adjSp(albino) + self.adjSp(color) + self.adjSp(pattern) + self.adjSp(tremor), command=lambda: self.controller.changeSelectedBunny(bunNum, bunParents, sex, albino, color, pattern, tremor)))
+        #rowTxt = self.adjSp(bunNum) + self.adjSp(bunParents) + self.adjSp(sex) + self.adjSp(albino) + self.adjSp(color) + self.adjSp(pattern) + self.adjSp(tremor)
+        rowList = [bunNum, bunParents, sex, albino, color, pattern, tremor]
+        rowTxt = ""
+        for element in rowList:
+            rowTxt += element.ljust(25, ' ')
+        ##rowTxt = rowTxt.ljust(25)
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=rowTxt, command=lambda: self.controller.changeSelectedBunny(bunNum, sex, albino, color, pattern, tremor)))
         self.resetRows()
 
     # Adds a row that displays info about the litter when clicked
@@ -38,7 +44,7 @@ class BunnyTable(Frame):
 
         # Sets them in new positions
         for i, e in enumerate(self.controller.rowList):
-            e.grid(row = i)
+            e.grid(row = i, columnspan=6, sticky=W)
 
     def deleteAllRows(self):
         # Delete labels

@@ -18,19 +18,6 @@ def buttons(controller, root):
     newCButton['font'] = fontSettings
     newCButton.grid(row = 0, column = 1, pady = 10, padx = 10, sticky=W, columnspan=2)
 
-def bunnyInfo(controller, root):
-    # Label at the top
-    controller.bunnyInfo["NumberLabel"] = Label(root, text="Bunny #", font=(18)).grid(row = 0, column = 7, pady = 20, padx = 20)
-
-    # Picture
-    bunnyPic = PhotoImage(file='placeholder.gif')
-    controller.bunnyInfo["BunnyPicLabel"] = Label(root, image=bunnyPic).grid(row = 1, column = 7, pady = 20, padx = 30)
-    controller.bunnyInfo["BunnyPicture"] = bunnyPic
-
-    # Info below picture
-    controller.bunnyInfo["InfoLabel"] = Label(root, text="Sex:\nAlbino:\nColor:\nPattern:\nTremor:", font=(14)).grid(row=2, column = 7, padx = 20, pady = 20)
-
-# TODO: before this pops up, calculate all males and females or something to pull into dropdown?
 # TODO: REMOVE X otherwise things break 
 def newLitterMenu(controller, root, pot_mothers, pot_fathers):
     mothers = ["New"] + pot_mothers
@@ -211,22 +198,3 @@ def newBunnyMenu(controller, root, parentType):
     okButton['font'] = fontSettings
     okButton.grid(row=9, column=0, padx=10, pady=10, sticky=W)
 
-def radiobuttonsOn(cB, cG, cC, cL, sB, sC, sS):
-    cB.configure(state=NORMAL)
-    cG.configure(state=NORMAL)
-    cC.configure(state=NORMAL)
-    cL.configure(state=NORMAL)
-    sB.configure(state=NORMAL)
-    sC.configure(state=NORMAL)
-    sS.configure(state=NORMAL)
-def radiobuttonsOff(cB, cG, cC, cL, sB, sC, sS):
-    cB.configure(state=DISABLED)
-    cG.configure(state=DISABLED)
-    cC.configure(state=DISABLED)
-    cL.configure(state=DISABLED)
-    sB.configure(state=DISABLED)
-    sC.configure(state=DISABLED)
-    sS.configure(state=DISABLED)
-
-def testPrint(albinoVar, colorVar, spottingVar, tremorVar):
-    print(albinoVar, colorVar, spottingVar, tremorVar)
