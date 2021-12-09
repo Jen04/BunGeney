@@ -38,31 +38,25 @@ def new_parent(sex, albino, color, spotting, tremor):
 
 def pot_mothers():
     pot_mom_list = []
-    bun_numb = 0
-    #print("len(main_list) = ", len(main_list))
     numb_litters = list(range(0,len(main_list)))
     for i in numb_litters:
         numb_buns = list(range(0,len(main_list[i])))
-        #print("numb_buns in litter ", i, " = ", numb_buns)
         for k in numb_buns:
             sex_bun = main_list[i][k][1][0]
             if sex_bun == "Female":
-                pot_mom_list.append(bun_numb)
-            bun_numb = bun_numb + 1
+                pot_mom_list.append(main_list[i][k][3])
     return pot_mom_list
             
                 
 def pot_fathers():
     pot_dad_list = []
-    bun_numb = 0
     numb_litters = list(range(0,len(main_list)))
     for i in numb_litters:
         numb_buns = list(range(0,len(main_list[i])))
         for k in numb_buns:
             sex_bun = main_list[i][k][1][0]
             if sex_bun == "Male":
-                pot_dad_list.append(bun_numb)
-            bun_numb = bun_numb + 1
+                pot_dad_list.append(main_list[i][k][3])
     return pot_dad_list
 
 def convertTremor(tremor):
