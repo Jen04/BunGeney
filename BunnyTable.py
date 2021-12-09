@@ -11,14 +11,9 @@ class BunnyTable(Frame):
 
     # Adds the first row that labels the grid
     def addFirstRow(self):
-        rowText = self.adjSp("Bunny #") + self.adjSp("Parents") + self.adjSp("Sex") + self.adjSp("Albino") + self.adjSp("Color") + self.adjSp("Pattern") + self.adjSp("Tremor")
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=rowText))
+        rowText = "Bunny #".ljust(15) + "Parents".ljust(15) + "Sex".ljust(15) + "Albino".ljust(15) + "Color".ljust(15) + "Pattern".ljust(15) + "Tremor".ljust(15)
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, width=100, justify="left", anchor=W, font='TkFixedFont', text=rowText))
         self.resetRows()
-
-    # Adjust string formatting so it shows up in the table correctly. All strings within the table will span at least 15 characters
-    def adjSp(self, stri):
-        offset = 15 - len(stri)
-        return stri + ' ' * offset
 
     # Adds a row with information about an individual bunny
     def addNormalRow(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
@@ -26,14 +21,14 @@ class BunnyTable(Frame):
         rowList = [bunNum, bunParents, sex, albino, color, pattern, tremor]
         rowTxt = ""
         for element in rowList:
-            rowTxt += element.ljust(25, ' ')
-        ##rowTxt = rowTxt.ljust(25)
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=rowTxt, command=lambda: self.controller.changeSelectedBunny(bunNum, sex, albino, color, pattern, tremor)))
+            rowTxt += element.ljust(15, ' ')
+
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text=rowTxt, justify="left", font='TkFixedFont', anchor=W, width=100, command=lambda: self.controller.changeSelectedBunny(bunNum, sex, albino, color, pattern, tremor)))
         self.resetRows()
 
     # Adds a row that displays info about the litter when clicked
     def addLitterRow(self, firstParent, secondParent):
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, text="Offspring of bunnies " + firstParent + " and " + secondParent))
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.gridFrame, font='TkFixedFont', text="Offspring of bunnies " + firstParent + " and " + secondParent))
         self.resetRows()
 
     # Called every time rows are changed. Re-displays rows
