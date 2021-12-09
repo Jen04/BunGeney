@@ -110,6 +110,7 @@ def count(litter):
     sex_tot = numb_male + numb_female
     sex_count = [numb_male, numb_female, sex_tot]
 
+
     alb_tot = numb_malb + numb_falb
     alb_count = [numb_malb, numb_falb, alb_tot]
 
@@ -153,7 +154,7 @@ def count(litter):
     healthy_count = [numb_mhealthy, numb_fhealthy, healthy_tot]
 
     tot_trem_count = [[trem_count], [healthy_count]]
-    
+
 
     count_table = [[sex_count], [tot_alb_count], [col_count], [pat_count], [tot_trem_count]]
 

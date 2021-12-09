@@ -5,7 +5,6 @@ def genotype(sex, albino, color, spotting, tremor):
     col_gen = [["B", "B"], ["B", "b"], ["b","B"], ["b", "b"]]
     den_gen = [["D", "D"], ["D", "d"], ["d","D"], ["d", "d"]]
     spot_gen = [["E", "E"], ["E", "e"], ["e","E"], ["e", "e"]]
-    spot_phen = ["Broken", "Charlie", "Solid"]
     trem_gen = [["X+", "X+"], ["X+", "Xpt"], ["Xpt","X+"], ["Xpt", "Xpt"]]
 
     bun_temp = [["sex 1", "albino 1", "col 1", "den 1", "spot 1", "trem 1"], ["sex 2", "albino 2", "col 2", "den 2", "spot 2", "trem 2"]]
@@ -61,8 +60,8 @@ def genotype(sex, albino, color, spotting, tremor):
             bun_den = den_gen[3]
     #print("Color = ", bun_col, "\nDensity = ", bun_den) #TS
     rand = [random.randint(0,2), random.randint(1,2), random.randint(0,2)]
-    if spotting == "Broken": bun_spot = spot_gen[0]
-    if spotting == "Charlie": bun_spot = spot_gen[rand[1]]
+    if spotting == "Broken": bun_spot = spot_gen[rand[1]]
+    if spotting == "Charlie": bun_spot = spot_gen[0]
     if spotting == "Solid": bun_spot = spot_gen[3]
     #print("Spotting = ", bun_spot) #TS
 
