@@ -77,9 +77,9 @@ class Controller:
         menu.destroy()
 
         if parentType == "Mother":
-            Main.total(self, "new", fatherNum, offspringNum, "Female", albino, color, spotting, tremor, 0, 0, 0, 0, 0)
+            Main.total(self, "new", fatherNum, offspringNum, "Female", self.yesNoConversion(albino), color, spotting, self.yesNoConversion(tremor), 0, 0, 0, 0, 0)
         else:
-            Main.total(self, motherNum, "new", offspringNum, 0, 0, 0, 0, 0, "Male", albino, color, spotting, tremor)
+            Main.total(self, motherNum, "new", offspringNum, 0, 0, 0, 0, 0, "Male", self.yesNoConversion(albino), color, spotting, self.yesNoConversion(tremor))
 
     # Creates new bunnies based on existing bunnies
     def setExistingBunnies(self, litterMenu, motherNum, fatherNum, offspringNum):
