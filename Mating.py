@@ -10,14 +10,8 @@ def mate(mother, father, numb_os):
                 rand[1] = 1
             if k == 5 and off_temp[1][0] == "X":
                 rand[1] = 0
-            #print(k)
             off_temp[0][k] = mother[0][rand[0]][k]
             off_temp[1][k] = father[0][rand[1]][k]
-            #off_list[i][0][k] = off_temp[0][k]
-            #off_list[i][1][k] = off_temp[1][k]
-        #print(i, off_temp)
         off_list[i] = off_temp
-        #print("list = ", i, off_list)
-    #print(off_list)
     return off_list
 

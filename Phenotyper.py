@@ -32,9 +32,9 @@ def phenotype(bun):
         if bun_den == ["d", "d"]: 
             if bun_col == ["B", "B"] or bun_col == ["B", "b"] or bun_col == ["b", "B"]: bun_col = "Gray"
             if bun_col == ["b", "b"]: bun_col = "Lilac"
-        if bun_spot == ["E", "E"]: bun_spot = "Broken"
+        if bun_spot == ["E", "E"]: bun_spot = "Charlie"
         if bun_spot == ["e", "e"]: bun_spot = "Solid"
-        if bun_spot == ["E", "e"] or bun_spot == ["e", "E"]: bun_spot = "Charlie"
+        if bun_spot == ["E", "e"] or bun_spot == ["e", "E"]: bun_spot = "Broken"
         
 
     output = [bun_sex, bun_albino, bun_col, bun_spot, bun_trem]
