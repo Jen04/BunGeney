@@ -21,7 +21,7 @@ class BunnyTable(Frame):
 
         self.canvas.grid_propagate(False)
 
-    # Called whenever widgets are added to scrollFrame
+    # Called when widgets are added to scrollFrame
     def changeScrollArea(self, e):
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 

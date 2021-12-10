@@ -152,6 +152,7 @@ def new_litter(controller, mother, father, numb_os, msex, malbino, mcolor, mspot
         # ----Bunny Added----
         main_list[litter_numb].append(new_bun)
         parentsStr = str(parents[0]) + " & " + str(parents[1])
+        print(bun_phen[0], bun_phen[1], bun_phen[2], bun_phen[3], bun_phen[4])
         controller.addBunnyToTable(str(bun_count), parentsStr, bun_phen[0], bun_phen[1], bun_phen[2], bun_phen[3], bun_phen[4])
     if TS:
         print("main_list after offspring = \n", main_list)

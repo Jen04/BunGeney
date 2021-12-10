@@ -104,6 +104,9 @@ def newParentsMenu(controller, root, offspringNum):
     fTremorBox.grid(row=8, column=0, padx=30, pady=10, sticky=W)
     fTremorBox.current(0)
 
+    fAlbinoBox.bind('<<ComboboxSelected>>', lambda event: dropDownSwap(event, fColorBox, fSpottingBox))
+    fAlbinoBox.set('No')
+
     # ------------------ ( New Mother ) ------------------ 
     Label(parentsMenu, text="New Mother").grid(row=0, column=3, padx=10, pady=10, sticky=W)
 
@@ -130,6 +133,9 @@ def newParentsMenu(controller, root, offspringNum):
     mTremorBox = Combobox(parentsMenu, values=controller.dropDownList[0], state='readonly')
     mTremorBox.grid(row=8, column=3, padx=30, pady=10, sticky=W)
     mTremorBox.current(0)
+
+    mAlbinoBox.bind('<<ComboboxSelected>>', lambda event: dropDownSwap(event, mColorBox, mSpottingBox))
+    mAlbinoBox.set('No')
 
     okButton = Button(parentsMenu, text="Okay", command=lambda: controller.setFirstGeneration(parentsMenu, mAlbinoBox.get(), mColorBox.get(), mSpottingBox.get(), mTremorBox.get(), fAlbinoBox.get(), fColorBox.get(), fSpottingBox.get(), fTremorBox.get(), offspringNum))
     okButton.grid(row=9, column=0, padx=10, pady=10, sticky=W)
@@ -166,7 +172,20 @@ def newBunnyMenu(controller, root, parentType, motherNum, fatherNum, offspringNu
     tremorBox = Combobox(nBunnyMenu, values=controller.dropDownList[0], state='readonly')
     tremorBox.grid(row=8, column=0, padx=30, pady=10, sticky=W)
     tremorBox.current(0)
+
+    albinoBox.bind('<<ComboboxSelected>>', lambda event: dropDownSwap(event, colorBox, spottingBox))
+    albinoBox.set('No')
     
     okButton = Button(nBunnyMenu, text="Okay", command=lambda: controller.setNewParentInfo(nBunnyMenu, albinoBox.get(), colorBox.get(), spottingBox.get(), tremorBox.get(), parentType, motherNum, fatherNum, offspringNum))
     okButton.grid(row=9, column=0, padx=10, pady=10, sticky=W)
 
+def dropDownSwap(event, drop1, drop2):
+    state = event.widget.get()
+    if state == "Yes":
+        drop1.configure(state='disabled')
+        drop2.configure(state='disabled')
+    elif state == "No":
+        drop1.configure(state='readonly')
+        drop2.configure(state='readonly')
+    else:
+        print("Something went wrong, line 187.")
