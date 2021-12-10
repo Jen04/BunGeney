@@ -92,6 +92,15 @@ class Controller:
     def addLitter(self, mother, father):
         self.table.addLitterRow(mother, father)
 
+    def addTwoParentSeparator(self, mother, father):
+        self.table.addTwoParentRow(mother, father)
+
+    def addMotherSeparator(self, mother):
+        self.table.addMotherRow(mother)
+
+    def addFatherSeparator(self, father):
+        self.table.addFatherRow(father)
+
     # Sends data to main from new mother and father
     def setFirstGeneration(self, menu, malbino, mcolor, mspotting, mtremor, dalbino, dcolor, dspotting, dtremor, offspringNum):
         menu.destroy()

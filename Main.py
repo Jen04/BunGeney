@@ -1,4 +1,5 @@
 
+from tkinter.constants import S
 from Genotyper import genotype 
 from Mating import mate 
 from Phenotyper import phenotype 
@@ -134,12 +135,21 @@ def new_litter(controller, mother, father, numb_os, msex, malbino, mcolor, mspot
                 bun_numb = bun_numb + 1
                 
     parents = [mother[3], father[3]]
-    controller.addLitter(str(parents[0]), str(parents[1]))
+
+    if motherNew == True:
+        if fatherNew == False:
+            controller.addMotherSeparator(str(parents[0]))
+        if fatherNew == True:
+            controller.addTwoParentSeparator(str(parents[0]), str(parents[1]))
+    elif fatherNew == True:
+        controller.addFatherSeparator(str(parents[1]))
 
     if motherNew == True:
         controller.addBunnyToTable(mBunnyNo, mParentsNo, msex, convertAlbino(malbino), mcolor, mspotting, convertTremor(mtremor))
     if fatherNew == True:
         controller.addBunnyToTable(dBunnyNo, dParentsNo, dsex, convertAlbino(dalbino), dcolor, dspotting, convertTremor(dtremor))
+
+    controller.addLitter(str(parents[0]), str(parents[1]))
 
     if TS:
         print("\nmain_list before offspring = \n", main_list)
