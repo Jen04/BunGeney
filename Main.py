@@ -9,7 +9,7 @@ import random
 seedset = 18710
 random.seed(seedset)
 
-TS = True
+TS = False
 if TS:
     print("\nCurrent seed is ", seedset)
 
@@ -77,6 +77,9 @@ def new_litter(controller, mother, father, numb_os, msex, malbino, mcolor, mspot
     if TS:
         print("\nPre- append:\nmother = ", mother, "\nfather = ", father, "\nlitter_numb = ", litter_numb)
         print("len(main_list) = ", len(main_list))
+    
+    motherNew = False
+    fatherNew = False
     if mother == "new" or father == "new":
         if litter_numb > 0:
             litter_numb = litter_numb + 1
@@ -85,14 +88,14 @@ def new_litter(controller, mother, father, numb_os, msex, malbino, mcolor, mspot
         print("\nmother = ", mother, "\nfather = ", father, "\nlitter_numb = ", litter_numb)
         print("len(main_list) = ", len(main_list))
     if mother == "new":
+        motherNew = True
         mother = new_parent(msex, malbino, mcolor, mspotting, mtremor)
-        
+      
         # ----Bunny Added----
         main_list[litter_numb].append(mother)
         
         mBunnyNo = str(main_list[litter_numb][len(main_list[litter_numb])-1][3])
         mParentsNo = main_list[litter_numb][len(main_list[litter_numb])-1][2]
-        controller.addBunnyToTable(mBunnyNo, mParentsNo, msex, convertAlbino(malbino), mcolor, mspotting, convertTremor(mtremor))
     else:
         mother = int(mother)
         bun_numb = 0
@@ -108,6 +111,7 @@ def new_litter(controller, mother, father, numb_os, msex, malbino, mcolor, mspot
                 bun_numb = bun_numb + 1
     
     if father == "new":
+        fatherNew = True
         father = new_parent(dsex, dalbino, dcolor, dspotting, dtremor)
         
         # ----Bunny Added----
@@ -115,7 +119,6 @@ def new_litter(controller, mother, father, numb_os, msex, malbino, mcolor, mspot
 
         dBunnyNo = str(main_list[litter_numb][len(main_list[litter_numb])-1][3])
         dParentsNo = main_list[litter_numb][len(main_list[litter_numb])-1][2]
-        controller.addBunnyToTable(dBunnyNo, dParentsNo, dsex, convertAlbino(dalbino), dcolor, dspotting, convertTremor(dtremor))
     else: 
         father = int(father)
         bun_numb = 0
@@ -129,10 +132,17 @@ def new_litter(controller, mother, father, numb_os, msex, malbino, mcolor, mspot
                 if bun_id == father:
                     father = main_list[i][k]
                 bun_numb = bun_numb + 1
+                
+    parents = [mother[3], father[3]]
+    controller.addLitter(str(parents[0]), str(parents[1]))
+
+    if motherNew == True:
+        controller.addBunnyToTable(mBunnyNo, mParentsNo, msex, convertAlbino(malbino), mcolor, mspotting, convertTremor(mtremor))
+    if fatherNew == True:
+        controller.addBunnyToTable(dBunnyNo, dParentsNo, dsex, convertAlbino(dalbino), dcolor, dspotting, convertTremor(dtremor))
 
     if TS:
         print("\nmain_list before offspring = \n", main_list)
-    parents = [mother[3], father[3]]
     range_os = list(range(0,numb_os))
     litter_x = mate(mother, father, numb_os)
     litter_numb = litter_numb + 1

@@ -66,7 +66,7 @@ class Controller:
         # Clear Litters
         newCButton = Button(self.root, text="Clear All Litters", command=lambda: self.clearLitters())
         newCButton['font'] = fontSettings
-        newCButton.grid(row = 0, column = 1, pady = 10, padx = 10, sticky=W, columnspan=2)
+        newCButton.grid(row = 0, column = 3, pady = 10, padx = 10, sticky=W, columnspan=2)
 
     # Adds individual bunny to the table
     def addBunnyToTable(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
@@ -85,6 +85,12 @@ class Controller:
     def setExistingBunnies(self, litterMenu, motherNum, fatherNum, offspringNum):
         litterMenu.destroy()
         Main.total(self, motherNum, fatherNum, offspringNum, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    
+    def getLitterInfo(self, mother, father):
+        pass
+
+    def addLitter(self, mother, father):
+        self.table.addLitterRow(mother, father)
 
     # Sends data to main from new mother and father
     def setFirstGeneration(self, menu, malbino, mcolor, mspotting, mtremor, dalbino, dcolor, dspotting, dtremor, offspringNum):

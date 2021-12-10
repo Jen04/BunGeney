@@ -16,8 +16,8 @@ class BunnyTable(Frame):
         self.canvas.create_window((0, 0), window=self.scrollFrame, anchor="nw")
         self.canvas.configure(yscrollcommand=self.scroll.set)
 
-        self.canvas.grid(row = 1, column = 0, sticky=N, columnspan=7, rowspan=3)
-        self.scroll.grid(column=7, row=1, sticky=NS, rowspan=3)
+        self.canvas.grid(row = 1, column = 0, sticky=N, columnspan=13, rowspan=3)
+        self.scroll.grid(column=13, row=1, sticky=NS, rowspan=3)
 
         self.canvas.grid_propagate(False)
 
@@ -38,8 +38,8 @@ class BunnyTable(Frame):
         self.resetRows()
 
     # Adds a row that displays info about the litter when clicked
-    def addLitterRow(self, firstParent, secondParent):
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, font='TkFixedFont', anchor=W, width=100, bg="#dedede", text="Offspring of bunnies " + firstParent + " and " + secondParent))
+    def addLitterRow(self, mother, father):
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, font='TkFixedFont', anchor=W, width=100, bg="#dedede", text="Offspring of bunnies " + mother + " and " + father, command=lambda:self.controller.getLitterInfo(mother, father)))
         self.resetRows()
 
     # Called every time rows are changed. Re-displays rows
