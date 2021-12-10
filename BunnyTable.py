@@ -43,9 +43,8 @@ class BunnyTable(Frame):
 
     # Adds a row that displays info about the litter when clicked
     def addLitterRow(self, firstParent, secondParent):
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, font='TkFixedFont', text="Offspring of bunnies " + firstParent + " and " + secondParent))
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, font='TkFixedFont', anchor=W, width=100, bg="#dedede", text="Offspring of bunnies " + firstParent + " and " + secondParent))
         self.resetRows()
-
 
     # Called every time rows are changed. Re-displays rows
     def resetRows(self):
@@ -64,8 +63,3 @@ class BunnyTable(Frame):
 
         # Rowlist back to empty
         self.controller.rowList = []
-
-    
-    # For new rows that have to do with a new litter, make a button as the divider?
-
-    
