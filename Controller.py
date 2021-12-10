@@ -1,51 +1,50 @@
-import Interactables
+import Menus
 import Main
 from BunnyTable import BunnyTable
 from TotalsTable import TotalsTable
 from tkinter import *
 from BunnyInfo import BunnyInfo
+import tkinter.font as font
 
 class Controller:
     def __init__(self, view):
-        #self.model = model
         self.view = view
         self.root = self.view.master
   
-        # Row list used within Table.py. All row buttons are contained within this
+        # Row list used within BunnyTable.py
         self.rowList = []
+
         # Dropdown options when selecting info for a new bunny
         self.dropDownList = [["No", "Yes"], ["Black", "Gray", "Chocolate", "Lilac"], ["Broken", "Charlie", "Solid"]]
 
+        # Add buttons to GUI
         self.createButtons()
 
         # Create bunny table
         self.table = BunnyTable(self.root, self)
+
         # Create totals table
         self.totalTable = TotalsTable(self.root, self)
 
+        # Info about individual bunnies
         self.bunnyInfo = BunnyInfo(self.root, self)  
         self.infoSetup()
 
         # Set column lables for bunny table, set initial values for totals table
         self.tableSetup()
 
+    # Adds first row of bunnyTable, sets up totalTable
     def tableSetup(self):
         self.table.addFirstRow()
         self.totalTable.setUpTable()
     
+    # Creates widgets for bunnyInfo
     def infoSetup(self):
         self.bunnyInfo.createFields()
- 
-    # Creates some of the buttons on the GUI
-    def createButtons(self):
-        Interactables.buttons(self, self.root)
-
-    # Adds the labels at the top of the table
-    def newLitter(self):
-        self.table.addFirstRow()
 
     # Clears litters from table
-    # TODO: make sure this is clearing everything it should
+    # TODO: make sure this is clearing everything it should, and test clear
+    # TODO: Scroll bar breaks when this is clicked if you're scrolled down. 
     def clearLitters(self):
         self.table.deleteAllRows()
         self.tableSetup()
@@ -53,29 +52,41 @@ class Controller:
         self.fatherTable = ["New"]
         Main.clearValues()
         self.bunnyInfo.setDefaults()
+        self.table.canvas.yview_moveto('0.0')
+
+    # Creates some of the buttons on the GUI
+    def createButtons(self):
+        fontSettings = font.Font(size = 12)
+
+        # New Litter
+        newLButton = Button(self.root, text="New Litter", command=lambda: Menus.newLitterMenu(self, self.root, Main.pot_mothers(), Main.pot_fathers()))
+        newLButton['font'] = fontSettings
+        newLButton.grid(row = 0, column = 0, pady = 10, padx = 10, sticky=W, columnspan=2)
+
+        # Clear Litters
+        newCButton = Button(self.root, text="Clear All Litters", command=lambda: self.clearLitters())
+        newCButton['font'] = fontSettings
+        newCButton.grid(row = 0, column = 1, pady = 10, padx = 10, sticky=W, columnspan=2)
 
     # Adds individual bunny to the table
     def addBunnyToTable(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
         self.table.addNormalRow(bunNum, bunParents, sex, albino, color, pattern, tremor)
 
-    # Activates after litterMenu is filled out and "okay" button is clicked.
+    # Activates after litterMenu is filled out and "okay" button is clicked. Sends data to Main.py
     def setNewParentInfo(self, menu, albino, color, spotting, tremor, parentType, motherNum, fatherNum, offspringNum):
-        # Check which parent is new, put zeroes for the other one or something
         menu.destroy()
 
-        # mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
         if parentType == "Mother":
-            Main.total(self, "new", fatherNum, self.offspringNum, "Female", albino, color, spotting, tremor, 0, 0, 0, 0, 0)
-
-        elif parentType == "Father":
-            Main.total(self, motherNum, "new", self.offspringNum, 0, 0, 0, 0, 0, "Male", albino, color, spotting, tremor)
+            Main.total(self, "new", fatherNum, offspringNum, "Female", albino, color, spotting, tremor, 0, 0, 0, 0, 0)
         else:
-            print("Something went wrong.")
+            Main.total(self, motherNum, "new", offspringNum, 0, 0, 0, 0, 0, "Male", albino, color, spotting, tremor)
 
+    # Creates new bunnies based on existing bunnies
     def setExistingBunnies(self, litterMenu, motherNum, fatherNum, offspringNum):
         litterMenu.destroy()
         Main.total(self, motherNum, fatherNum, offspringNum, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
+    # Sends data to main from new mother and father
     def setFirstGeneration(self, menu, malbino, mcolor, mspotting, mtremor, dalbino, dcolor, dspotting, dtremor, offspringNum):
         menu.destroy()
 
@@ -90,9 +101,9 @@ class Controller:
             dcolor = "Unknown"
             dspotting = "Unknown"
 
-        # mother, father, numb_os, msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
         Main.total(self, "new", "new", offspringNum, "Female", mAlbAnswer, mcolor, mspotting, self.yesNoConversion(mtremor), "Male", dAlbAnswer, dcolor, dspotting, self.yesNoConversion(dtremor))
 
+    # Converts strings to the format Main.py expects before passing them in
     def yesNoConversion(self, yesNoStr):
         if yesNoStr == "Yes":
             return True
@@ -100,8 +111,6 @@ class Controller:
             return False
         else:
             print("Yes/No was not passed in, something went wrong")
-
-    # NOTE: FIX THE BROKEN GRAYED OUT BUTTON. 
 
     # Function used when a bunny row is clicked. Displays info about that bunny.
     def changeSelectedBunny(self, bunNum, sex, albino, color, pattern, tremor):

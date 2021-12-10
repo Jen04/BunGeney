@@ -2,23 +2,9 @@ from tkinter import *
 import tkinter.font as font
 from tkinter.ttk import Combobox
 from tkinter import messagebox
-import Main
 
-def buttons(controller, root):
-    fontSettings = font.Font(size = 12)
-
-    # New Litter
-    controller.newLButton = Button(root, text="New Litter", command=lambda: newLitterMenu(controller, root, Main.pot_mothers(), Main.pot_fathers()))
-    controller.newLButton['font'] = fontSettings
-    controller.newLButton.grid(row = 0, column = 0, pady = 10, padx = 10, sticky=W, columnspan=2)
-
-    # Clear Litters
-    newCButton = Button(root, text="Clear All Litters", command=lambda: controller.clearLitters())
-    newCButton['font'] = fontSettings
-    newCButton.grid(row = 0, column = 1, pady = 10, padx = 10, sticky=W, columnspan=2)
-
-# TODO: REMOVE X otherwise things break 
 def newLitterMenu(controller, root, pot_mothers, pot_fathers):
+    # Sets start of dropdowns so "New" is always an option
     mothers = ["New"] + pot_mothers
     fathers = ["New"] + pot_fathers
     if len(pot_mothers) == 0:
@@ -52,28 +38,26 @@ def newLitterMenu(controller, root, pot_mothers, pot_fathers):
     okButton['font'] = fontSettings
     okButton.grid(row=6, column=0, padx=30, pady=10, sticky=W)
 
-def disable():
-    pass
-
+# Called by newLitterMenu to determine where to send collected data
 def checkInput(controller, root, litterMenu, motherNum, fatherNum, offspringNum):
-
-    # Is it an int?
+    # Make sure it's an int
     try: 
         strToNum = int(offspringNum)
     except ValueError:
         messagebox.showerror(title="Invalid Input", message="Please enter a number for number of offspring.")
         return
     
-    # Is it positive?
+    # Make sure it's positive
     if strToNum < 1:
         messagebox.showerror(title="Invalid Input", message="Please enter a valid number of offspring.")
         return
 
-    # Too many bunnies?
+    # Make sure offspringNum isn't larger than 100
     if strToNum > 100:
         messagebox.showerror(title="Invalid Input", message="Please choose a number less than or equal to 100 for number of offspring.")
         return
 
+    # Choose with menu to use based on input, and create them
     if motherNum == "New" and fatherNum == "New":
         litterMenu.destroy()
         newParentsMenu(controller, root, offspringNum)
@@ -87,10 +71,6 @@ def checkInput(controller, root, litterMenu, motherNum, fatherNum, offspringNum)
         controller.setExistingBunnies(litterMenu, motherNum, fatherNum, offspringNum)
 
 def newParentsMenu(controller, root, offspringNum):
-    # Father
-
-    fontSettings = font.Font(size = 12)
-
     parentsMenu = Toplevel(root)
     parentsMenu.resizable(False, False)
     parentsMenu.title("New Parents")
@@ -151,18 +131,10 @@ def newParentsMenu(controller, root, offspringNum):
     mTremorBox.grid(row=8, column=3, padx=30, pady=10, sticky=W)
     mTremorBox.current(0)
 
-    # msex, malbino, mcolor, mspotting, mtremor, dsex, dalbino, dcolor, dspotting, dtremor
     okButton = Button(parentsMenu, text="Okay", command=lambda: controller.setFirstGeneration(parentsMenu, mAlbinoBox.get(), mColorBox.get(), mSpottingBox.get(), mTremorBox.get(), fAlbinoBox.get(), fColorBox.get(), fSpottingBox.get(), fTremorBox.get(), offspringNum))
     okButton.grid(row=9, column=0, padx=10, pady=10, sticky=W)
 
-def newRadioButton(controller, menu, name, txt, var, val, r, c):
-    controller.rbDict[name] = Radiobutton(menu, text=txt, variable=var, value=val)
-    controller.rbDict[name].grid(row=r, column=c, padx=5, pady=5, sticky=W)
-
 def newBunnyMenu(controller, root, parentType, motherNum, fatherNum, offspringNum):
-
-    fontSettings = font.Font(size = 12)
-
     nBunnyMenu = Toplevel(root)
     nBunnyMenu.resizable(False, False)
     nBunnyMenu.title("New " + parentType)
@@ -196,6 +168,5 @@ def newBunnyMenu(controller, root, parentType, motherNum, fatherNum, offspringNu
     tremorBox.current(0)
     
     okButton = Button(nBunnyMenu, text="Okay", command=lambda: controller.setNewParentInfo(nBunnyMenu, albinoBox.get(), colorBox.get(), spottingBox.get(), tremorBox.get(), parentType, motherNum, fatherNum, offspringNum))
-    okButton['font'] = fontSettings
     okButton.grid(row=9, column=0, padx=10, pady=10, sticky=W)
 

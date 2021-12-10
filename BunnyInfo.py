@@ -1,12 +1,12 @@
 from tkinter import *
 
+# Controls the individual bunny data that displays on the right side of the window
 class BunnyInfo(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
 
         self.parent = parent
         self.controller = controller
-
         self.bunnyInfo = {}
     
     def createFields(self):
@@ -29,12 +29,10 @@ class BunnyInfo(Frame):
         self.setPic('Pictures/Default.png')
         self.setInfo("", "", "", "", "")
 
-
     def setNumberLbl(self, num):
         self.bunnyInfo["NumberLabel"].configure(text="Bunny # " + num)
 
     def setPic(self, f):
-        # Picture
         bunnyPic = PhotoImage(file=f)
         self.bunnyInfo["BunnyPicLabel"].configure(image=bunnyPic)
         self.bunnyInfo["BunnyPicture"] = bunnyPic

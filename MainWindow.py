@@ -1,6 +1,6 @@
 from tkinter import *
 
-# Inherits from frame class in tkinter
+# Most widgets in MainWindow are created using the controller so they can be changed dynamically
 class MainWindow(Frame):
     
     def __init__(self, master=None):

@@ -21,6 +21,7 @@ class BunnyTable(Frame):
 
         self.canvas.grid_propagate(False)
 
+    # Called whenever widgets are added to scrollFrame
     def changeScrollArea(self, e):
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
@@ -32,12 +33,9 @@ class BunnyTable(Frame):
 
     # Adds a row with information about an individual bunny
     def addNormalRow(self, bunNum, bunParents, sex, albino, color, pattern, tremor):
-        #rowTxt = self.adjSp(bunNum) + self.adjSp(bunParents) + self.adjSp(sex) + self.adjSp(albino) + self.adjSp(color) + self.adjSp(pattern) + self.adjSp(tremor)
-        rowList = [bunNum, bunParents, sex, albino, color, pattern, tremor]
-        rowTxt = ""
-        for element in rowList:
-            rowTxt += element.ljust(15, ' ')
-
+        # TODO: Remove this print later
+        print(bunNum, bunParents, sex, albino, color, pattern, tremor)
+        rowTxt = bunNum.ljust(15) + bunParents.ljust(15) + sex.ljust(15) + albino.ljust(15) + color.ljust(15) + pattern.ljust(15) + tremor.ljust(15)
         self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, text=rowTxt, justify="left", font='TkFixedFont', anchor=W, width=100, command=lambda: self.controller.changeSelectedBunny(bunNum, sex, albino, color, pattern, tremor)))
         self.resetRows()
 

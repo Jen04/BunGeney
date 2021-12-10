@@ -1,5 +1,6 @@
 from tkinter import *
 
+# Displays the computed data at the bottom of the window
 class TotalsTable(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
@@ -23,7 +24,7 @@ class TotalsTable(Frame):
         self.showFemale("#", "#", "#", "#", "#", "#")
         self.showTotals("#", "#", "#", "#", "#", "#")
   
-    # Row 3
+    # Row 1
     def showMale(self, bunnyNum, sexTotal, albinoTotal, colorTotal, patternTotal, tremorTotal):
         self.addEntry("Male (" + bunnyNum + ")", 5, 0)
         self.addEntry(sexTotal, 5, 1)
@@ -32,7 +33,7 @@ class TotalsTable(Frame):
         self.addEntry(patternTotal, 5, 4)
         self.addEntry(tremorTotal, 5, 5)
 
-    # Row 4
+    # Row 2
     def showFemale(self, bunnyNum, sexTotal, albinoTotal, colorTotal, patternTotal, tremorTotal):
         self.addEntry("Female (" + bunnyNum + ")", 6, 0)
         self.addEntry(sexTotal, 6, 1)
@@ -41,7 +42,7 @@ class TotalsTable(Frame):
         self.addEntry(patternTotal, 6, 4)
         self.addEntry(tremorTotal, 6, 5)
 
-    # Row 5
+    # Row 3
     def showTotals(self, num, sexTotal, albinoTotal, colorTotal, patternTotal, tremorTotal):
         self.addEntry("Total (" + num + ")", 7, 0)
         self.addEntry(sexTotal, 7, 1)
