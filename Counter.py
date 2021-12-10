@@ -144,7 +144,7 @@ def count(litter):
     solid_tot = numb_msolid + numb_fsolid
     solid_count = [numb_msolid, numb_fsolid, solid_tot]
 
-    pat_count = [[brok_count], [char_count], [solid_count]]
+    pat_count = [[char_count], [brok_count], [solid_count]]
 
 
     trem_tot = numb_mtrem + numb_ftrem
