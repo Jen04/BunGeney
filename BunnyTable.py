@@ -38,8 +38,23 @@ class BunnyTable(Frame):
         self.resetRows()
 
     # Adds a row that displays info about the litter when clicked
-    def addLitterRow(self, mother, father):
-        self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, font='TkFixedFont', anchor=W, width=100, bg="#dedede", text="Offspring of bunnies " + mother + " and " + father, command=lambda:self.controller.getLitterInfo(mother, father)))
+    def addLitterRow(self, mother, father, litterNumber):
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, font='TkFixedFont', anchor=W, width=100, bg="#dedede", text="Offspring of bunnies " + mother + " and " + father, command=lambda:self.controller.getLitterInfo(litterNumber)))
+        self.resetRows()
+
+    # Adds a row that separates out new parents
+    def addTwoParentRow(self, mother, father):
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, font='TkFixedFont', anchor=W, width=100, bg="#dedede", text="New parents " + mother + " and " + father))
+        self.resetRows()
+
+    # Adds a row that separates out new mother
+    def addMotherRow(self, mother):
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, font='TkFixedFont', anchor=W, width=100, bg="#dedede", text="New mother " + mother))
+        self.resetRows()
+
+    # Adds a row that separates out new father
+    def addFatherRow(self, father):
+        self.controller.rowList.insert(len(self.controller.rowList), Button(self.scrollFrame, font='TkFixedFont', anchor=W, width=100, bg="#dedede", text="New father " + father))
         self.resetRows()
 
     # Called every time rows are changed. Re-displays rows
