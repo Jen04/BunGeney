@@ -1,5 +1,6 @@
 import Menus
 import Main
+import Counter
 from BunnyTable import BunnyTable
 from TotalsTable import TotalsTable
 from tkinter import *
@@ -24,7 +25,7 @@ class Controller:
         self.table = BunnyTable(self.root, self)
 
         # Create totals table
-        self.totalTable = TotalsTable(self.root, self)
+        self.totalsTable = TotalsTable(self.root, self)
 
         # Info about individual bunnies
         self.bunnyInfo = BunnyInfo(self.root, self)  
@@ -36,7 +37,7 @@ class Controller:
     # Adds first row of bunnyTable, sets up totalTable
     def tableSetup(self):
         self.table.addFirstRow()
-        self.totalTable.setUpTable()
+        self.totalsTable.setUpTable()
     
     # Creates widgets for bunnyInfo
     def infoSetup(self):
@@ -86,11 +87,61 @@ class Controller:
         litterMenu.destroy()
         Main.total(self, motherNum, fatherNum, offspringNum, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     
-    def getLitterInfo(self, mother, father):
-        pass
+    def getLitterInfo(self, litterNumber):
+        litterCount = Counter.count(litterNumber)
+        albino = litterCount[1][0][0]
+        notalbino = litterCount[1][1][0]
+        black = litterCount[2][0][0]
+        gray = litterCount[2][1][0]
+        chocolate = litterCount[2][2][0]
+        lilac = litterCount[2][3][0]
+        charlie = litterCount[3][0][0]
+        broken = litterCount[3][1][0]
+        solid = litterCount[3][2][0]
+        tremor = litterCount[4][0][0]
+        healthy = litterCount[4][1][0]
+        total = litterCount[0][0]
+        self.totalsTable.showMale(albino, notalbino, black, gray, chocolate, lilac, charlie, broken, solid, tremor, healthy, total)
 
-    def addLitter(self, mother, father):
-        self.table.addLitterRow(mother, father)
+        albino = litterCount[1][0][1]
+        notalbino = litterCount[1][1][1]
+        black = litterCount[2][0][1]
+        gray = litterCount[2][1][1]
+        chocolate = litterCount[2][2][1]
+        lilac = litterCount[2][3][1]
+        charlie = litterCount[3][0][1]
+        broken = litterCount[3][1][1]
+        solid = litterCount[3][2][1]
+        tremor = litterCount[4][0][1]
+        healthy = litterCount[4][1][1]
+        total = litterCount[0][1]
+        self.totalsTable.showFemale(albino, notalbino, black, gray, chocolate, lilac, charlie, broken, solid, tremor, healthy, total)
+
+        albino = litterCount[1][0][2]
+        notalbino = litterCount[1][1][2]
+        black = litterCount[2][0][2]
+        gray = litterCount[2][1][2]
+        chocolate = litterCount[2][2][2]
+        lilac = litterCount[2][3][2]
+        charlie = litterCount[3][0][2]
+        broken = litterCount[3][1][2]
+        solid = litterCount[3][2][2]
+        tremor = litterCount[4][0][2]
+        healthy = litterCount[4][1][2]
+        total = litterCount[0][2]
+        self.totalsTable.showTotals(albino, notalbino, black, gray, chocolate, lilac, charlie, broken, solid, tremor, healthy, total)
+
+    def addLitter(self, mother, father, litterNumber):
+        self.table.addLitterRow(mother, father, litterNumber)
+
+    def addTwoParentSeparator(self, mother, father):
+        self.table.addTwoParentRow(mother, father)
+
+    def addMotherSeparator(self, mother):
+        self.table.addMotherRow(mother)
+
+    def addFatherSeparator(self, father):
+        self.table.addFatherRow(father)
 
     # Sends data to main from new mother and father
     def setFirstGeneration(self, menu, malbino, mcolor, mspotting, mtremor, dalbino, dcolor, dspotting, dtremor, offspringNum):
