@@ -1,5 +1,4 @@
 
-from tkinter.constants import S
 from Genotyper import genotype 
 from Mating import mate 
 from Phenotyper import phenotype 
