@@ -1,5 +1,5 @@
 # BunGeney
-BunGeney is a Python program that simulates genetic inheritance in rabbits. It was created to be used in high school biology classrooms as part of an independent study project. BunGeney was created by [Jen Hynes](https://github.com/Jen04) and [Joseph Martin](https://github.com/JMartin1937). 
+BunGeney is a Python program that simulates genetic inheritance in rabbits. It was created to be used in high school and college-level biology classrooms as part of an independent study project. BunGeney was created by [Jen Hynes](https://github.com/Jen04) and [Joseph Martin](https://github.com/JMartin1937). 
 
 ## Requirements
 * This program was written in Python 3.9.1. The latest version of Python can be downloaded [here](https://www.python.org/downloads/). 
