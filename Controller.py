@@ -89,47 +89,11 @@ class Controller:
     
     def getLitterInfo(self, litterNumber):
         litterCount = Counter.count(litterNumber)
-        albino = litterCount[1][0][0]
-        notalbino = litterCount[1][1][0]
-        black = litterCount[2][0][0]
-        gray = litterCount[2][1][0]
-        chocolate = litterCount[2][2][0]
-        lilac = litterCount[2][3][0]
-        charlie = litterCount[3][0][0]
-        broken = litterCount[3][1][0]
-        solid = litterCount[3][2][0]
-        tremor = litterCount[4][0][0]
-        healthy = litterCount[4][1][0]
-        total = litterCount[0][0]
-        self.totalsTable.showMale(albino, notalbino, black, gray, chocolate, lilac, charlie, broken, solid, tremor, healthy, total)
 
-        albino = litterCount[1][0][1]
-        notalbino = litterCount[1][1][1]
-        black = litterCount[2][0][1]
-        gray = litterCount[2][1][1]
-        chocolate = litterCount[2][2][1]
-        lilac = litterCount[2][3][1]
-        charlie = litterCount[3][0][1]
-        broken = litterCount[3][1][1]
-        solid = litterCount[3][2][1]
-        tremor = litterCount[4][0][1]
-        healthy = litterCount[4][1][1]
-        total = litterCount[0][1]
-        self.totalsTable.showFemale(albino, notalbino, black, gray, chocolate, lilac, charlie, broken, solid, tremor, healthy, total)
-
-        albino = litterCount[1][0][2]
-        notalbino = litterCount[1][1][2]
-        black = litterCount[2][0][2]
-        gray = litterCount[2][1][2]
-        chocolate = litterCount[2][2][2]
-        lilac = litterCount[2][3][2]
-        charlie = litterCount[3][0][2]
-        broken = litterCount[3][1][2]
-        solid = litterCount[3][2][2]
-        tremor = litterCount[4][0][2]
-        healthy = litterCount[4][1][2]
-        total = litterCount[0][2]
-        self.totalsTable.showTotals(albino, notalbino, black, gray, chocolate, lilac, charlie, broken, solid, tremor, healthy, total)
+        # Parameters: albino, notalbino, black, gray, chocolate, lilac, charlie, broken, solid, tremor, healthy, total
+        self.totalsTable.showMale(litterCount[1][0][0], litterCount[1][1][0], litterCount[2][0][0], litterCount[2][1][0], litterCount[2][2][0], litterCount[2][3][0], litterCount[3][0][0], litterCount[3][1][0], litterCount[3][2][0], litterCount[4][0][0], litterCount[4][1][0], litterCount[0][0])
+        self.totalsTable.showFemale(litterCount[1][0][1], litterCount[1][1][1], litterCount[2][0][1], litterCount[2][1][1], litterCount[2][2][1], litterCount[2][3][1], litterCount[3][0][1], litterCount[3][1][1], litterCount[3][2][1], litterCount[4][0][1], litterCount[4][1][1], litterCount[0][1])
+        self.totalsTable.showTotals(litterCount[1][0][2], litterCount[1][1][2], litterCount[2][0][2], litterCount[2][1][2], litterCount[2][2][2], litterCount[2][3][2], litterCount[3][0][2], litterCount[3][1][2], litterCount[3][2][2], litterCount[4][0][2], litterCount[4][1][2], litterCount[0][2])
 
     def addLitter(self, mother, father, litterNumber):
         self.table.addLitterRow(mother, father, litterNumber)
