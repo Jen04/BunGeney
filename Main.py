@@ -2,7 +2,6 @@
 from Genotyper import genotype 
 from Mating import mate 
 from Phenotyper import phenotype 
-from Outputer import output
 import random 
 
 seedset = random.randint(0,100000)
