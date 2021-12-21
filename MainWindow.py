@@ -9,5 +9,5 @@ class MainWindow(Frame):
         # Master is root   
         self.master = master
         self.master.resizable(False, False)
-        self.master.title("Inheritance Lab")
+        self.master.title("BunGeney")
 
